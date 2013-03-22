@@ -8,3 +8,12 @@
     = yield :javascript
   %body
     = yield
+
+    %section.products
+      %h1 Products
+      %ul
+        - 20.times do |i|
+          %li.product
+            %a{ href: "#products/#{i}" }
+              = image_tag "//lorempixel.com/150/200/technics/?#{i}"
+

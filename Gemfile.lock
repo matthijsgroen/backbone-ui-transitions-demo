@@ -30,6 +30,7 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     builder (3.0.4)
+    chunky_png (1.2.7)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -37,6 +38,12 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass-rails (1.0.3)
+      compass (>= 0.12.2, < 0.14)
     ejs (1.0.0)
     erubis (2.7.0)
     execjs (1.4.0)
@@ -48,6 +55,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.1.2)
       i18n (~> 0.5)
+    fssm (0.2.10)
     haml (4.0.0)
       tilt
     haml-rails (0.4)
@@ -124,6 +132,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  compass-rails
   factory_girl_rails
   faker
   haml-rails

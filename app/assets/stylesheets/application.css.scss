@@ -1,0 +1,7 @@
+$base-color: #f9f9f9;
+
+@import 'elements/*';
+
+body {
+  background: $base-color;
+}
