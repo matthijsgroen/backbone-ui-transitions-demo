@@ -12,8 +12,15 @@
     %section.products
       %h1 Products
       %ul
-        - 20.times do |i|
+        - 11.times do |i|
           %li.product
             %a{ href: "#products/#{i}" }
-              = image_tag "//lorempixel.com/150/200/technics/?#{i}"
+              = image_tag "//lorempixel.com/100/100/technics/?#{i}"
+        %li.open-group
+          %h2 Technology
+
+        - 12.times do |i|
+          %li.product
+            %a{ href: "#products/#{12 + i}" }
+              = image_tag "//lorempixel.com/100/100/technics/?#{12 + i}"
 

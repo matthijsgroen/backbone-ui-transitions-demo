@@ -1,4 +1,9 @@
-@import 'compass/utilities/general/clearfix';
+@import 'compass';
+
+@mixin position($position) {
+
+  left: (-140px / 2) - 15px + (140px * $position);
+}
 
 section.products {
   background: shade($base-color, 10%);
@@ -10,10 +15,40 @@ section.products {
   }
 
   ul {
+    list-style: none;
+    padding: 0;
     li {
+      padding-left: 0;
+      margin-left: 0;
+    }
+    li.product {
       float: left;
-      list-style: none;
-      margin: 20px
+      margin: 20px;
+
+      img {
+        vertical-align: bottom;
+      }
+      @include box-shadow(black 2px 2px 10px);
+    }
+    li.open-group {
+      clear: both;
+      background: shade($base-color, 40%);
+      padding: 20px;
+      position: relative;
+      @include box-shadow(#444 0px 0px 10px 2px inset);
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        border: {
+          width: 0 15px 15px;
+          style: solid;
+          color: rgba(68, 68, 68, 0.85) transparent;
+        }
+        top: -15px;
+        @include position(4);
+      }
     }
     @include clearfix;
   }
