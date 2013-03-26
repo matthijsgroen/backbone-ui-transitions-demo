@@ -1,7 +1,6 @@
 @import 'compass';
 
 @mixin position($position) {
-
   left: (-140px / 2) - 15px + (140px * $position);
 }
 
@@ -14,43 +13,80 @@ section.products {
     color: #333;
   }
 
-  ul {
+  ul.categories {
     list-style: none;
     padding: 0;
-    li {
+    li.category {
+      float: left;
       padding-left: 0;
       margin-left: 0;
-    }
-    li.product {
-      float: left;
       margin: 20px;
 
       img {
         vertical-align: bottom;
       }
-      @include box-shadow(black 2px 2px 10px);
-    }
-    li.open-group {
-      clear: both;
-      background: shade($base-color, 40%);
-      padding: 20px;
-      position: relative;
-      @include box-shadow(#444 0px 0px 10px 2px inset);
-
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        border: {
-          width: 0 15px 15px;
-          style: solid;
-          color: rgba(68, 68, 68, 0.85) transparent;
-        }
-        top: -15px;
-        @include position(4);
-      }
+      @include box-shadow(rgba(0,0,0,0.6) 2px 2px 5px);
     }
     @include clearfix;
   }
 
+}
+
+li.open-group {
+  -webkit-transition: all 600ms;
+
+  &.collapsed {
+    section {
+      max-height: 0;
+    }
+    padding: {
+      top: 0;
+      bottom: 0;
+    }
+  }
+  section {
+    -webkit-transition: all 600ms;
+    overflow: hidden;
+    max-height: 600px;
+  }
+
+  clear: both;
+  background: shade($base-color, 40%);
+  padding: 20px;
+  position: relative;
+  @include box-shadow(#444 0px 0px 10px 2px inset);
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: shade($base-color, 40%);
+    top: -9px;
+    @include rotate(45deg);
+    @include box-shadow(#444 3px 3px 9px -2px inset);
+    @include position(4);
+  }
+  &.collapsed:after {
+    -webkit-transition: all 600ms;
+    width: 0;
+    height: 0;
+    top: 0;
+  }
+}
+
+ul.products {
+  list-style: none;
+  padding: 0;
+  @include clearfix;
+  li.product {
+    float: left;
+    margin: 20px;
+
+    img {
+      vertical-align: bottom;
+    }
+    @include box-shadow(rgba(0,0,0,0.6) 0px 9px 10px -5px);
+  }
 }
