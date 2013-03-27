@@ -1,5 +1,5 @@
 - content_for :javascript do
   :coffee
     UIDemo.app.on 'application:initialize', (world) ->
-      world.products.reset #{@products.to_json}
+      world.productCategories.reset #{@product_categories.to_json}
 

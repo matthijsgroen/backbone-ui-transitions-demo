@@ -1,3 +1,3 @@
 UiDemo::Application.routes.draw do
-  root to: 'products#index'
+  root to: 'product_categories#index'
 end
