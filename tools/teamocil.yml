@@ -1,0 +1,23 @@
+session:
+  name: 'Ui-Demo'
+  windows:
+    - root: <%= ENV['UI_DEMO_ROOT'] %>
+      name: 'Daemons'
+      splits:
+        - cmd: 'r s'
+        - cmd: 'br konacha:serve'
+          width: 50
+    - root: <%= ENV['UI_DEMO_ROOT'] %>
+      name: 'Editing'
+      splits:
+        - cmd: 'vim'
+    - root: <%= ENV['UI_DEMO_ROOT'] %>
+      name: 'Tests'
+      splits:
+        - cmd: 'be guard'
+        - cmd: 'wip'
+          width: 50
+    - root: <%= ENV['UI_DEMO_ROOT'] %>
+      name: 'Console'
+      splits:
+        - cmd: 'git fetch'
