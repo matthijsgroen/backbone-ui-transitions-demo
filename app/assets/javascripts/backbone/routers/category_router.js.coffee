@@ -1,7 +1,10 @@
 
 class UIDemo.Routers.CategoryRouter extends Backbone.Router
   routes:
-    '': 'index'
+    'categories/:id': 'show'
 
-  index: ->
+  initialize: ({ @view }) ->
+
+  show: (id) ->
+    @view.open parseInt(id, 10)
 

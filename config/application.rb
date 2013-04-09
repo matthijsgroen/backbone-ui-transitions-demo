@@ -58,5 +58,9 @@ module UiDemo
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    if defined? ::HamlCoffeeAssets
+      config.hamlcoffee.name_filter = lambda { |n| n.sub /^backbone\/templates\//, '' }
+    end
   end
 end

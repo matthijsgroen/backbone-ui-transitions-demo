@@ -1,0 +1,2 @@
+%a{ href: @categoryUrl() }
+  %img{ src: @categoryImageUrl(), height: 100, width: 100 }

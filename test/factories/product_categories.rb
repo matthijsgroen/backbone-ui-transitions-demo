@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :product_category do
     name "MyString"
-    image_url "MyString"
+    sequence(:image_url) { |n| "http://placezombies.com/100x100?#{n}" }
   end
 end

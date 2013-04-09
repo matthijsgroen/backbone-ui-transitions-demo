@@ -1,6 +1,6 @@
 #= require_self
-#= require ./application
 #= require_tree ./templates
+#= require ./application
 #= require_tree ./models
 #= require_tree ./views
 #= require_tree ./routers
