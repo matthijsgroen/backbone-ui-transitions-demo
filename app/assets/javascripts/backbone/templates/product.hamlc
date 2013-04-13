@@ -1,0 +1,2 @@
+%a{ href: @url() }
+  %img{ src: @imageUrl(), width: 150, height: 200 }

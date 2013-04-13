@@ -1,14 +1,18 @@
 #= require ./transition_view
 
-class UIDemo.Views.ProductsView extends UIDemo.Views.TransitionView
+class UIDemo.Views.ProductsView extends UIDemo.Views.CollectionView
   tagName: 'li'
   className: 'open-group collapsed'
+  itemViewClass: UIDemo.Views.ProductView
+  collectionSelector: 'ul.products'
+
   template: JST['products']
 
-  render: ->
-    @$el.html @template this
-    @$el.attr('data-position', (-140 / 2) - 15 + (140 * 4))
-    this
+  initialize: ({ @category }) ->
+    super
+
+  categoryName: ->
+    @category.get('name')
 
   open: ->
     @transitionRemoveClass 'collapsed'

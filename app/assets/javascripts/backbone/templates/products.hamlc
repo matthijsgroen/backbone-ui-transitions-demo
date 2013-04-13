@@ -1,4 +1,4 @@
 %section
-  %h2 Technology
+  %h2= @categoryName()
 
   %ul.products

@@ -9,6 +9,4 @@ class UIDemo.Routers.CategoryRouter extends Backbone.Router
     category = @collection.get(id)
     category.loadProducts().then =>
       @view.open(id)
-    .then null,
-      (error) -> console.log error.message
 

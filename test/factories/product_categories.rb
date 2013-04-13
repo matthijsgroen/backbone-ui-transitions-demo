@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :product_category do
-    name "MyString"
+    name { Faker::Company.name }
     sequence(:image_url) { |n| "http://placezombies.com/100x100?#{n}" }
   end
 end

@@ -3,13 +3,12 @@ class UIDemo.Views.TransitionView extends Backbone.View
 
   transitionRemoveClass: (className) ->
     p = @_transitionPromise()
-    @$el.removeClass className
-    p
+    @_delay(=> @$el.removeClass className).then -> p
 
   transitionAddClass: (className) ->
     p = @_transitionPromise()
-    @$el.addClass className
-    p
+    @_delay(=> @$el.addClass className).then ->
+      p
 
   _transitionPromise: ->
     defer = `when`.defer()
@@ -37,3 +36,9 @@ class UIDemo.Views.TransitionView extends Backbone.View
       'MozTransition': 'transitionend'
       'WebkitTransition': 'webkitTransitionEnd'
     return event for property, event of transitions when el.style[property]?
+
+  _delay: (code) ->
+    defer = `when`.defer()
+    setTimeout ->
+      `when(code())`.then => defer.resolve()
+    defer.promise

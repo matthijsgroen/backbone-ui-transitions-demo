@@ -11,6 +11,7 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
     @model.on 'products:loaded', @clearLoading, this
     @folderView = new UIDemo.Views.ProductsView
       collection: @model.products
+      category: @model
 
   render: ->
     @$el.html @template this
