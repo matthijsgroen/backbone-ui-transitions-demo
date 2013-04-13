@@ -1,0 +1,48 @@
+@import 'compass';
+
+@-webkit-keyframes loading
+{
+  from {
+    opacity: 1.0;
+  }
+  to {
+    opacity: 0.2;
+  }
+}
+
+ul.categories {
+  list-style: none;
+  padding: 0;
+  @include clearfix;
+}
+
+li.category {
+  float: left;
+  padding-left: 0;
+  margin-left: 0;
+  margin: 20px;
+
+  @include transition(outline 600ms, opacity 600ms);
+  outline: 0px solid white;
+  @include box-shadow(rgba(0,0,0,0.6) 2px 2px 5px);
+
+  img {
+    vertical-align: bottom;
+    @include transition(opacity 600ms);
+  }
+
+  &.active {
+    background: green;
+    outline: 5px solid green;
+  }
+  &.loading {
+    img {
+      -webkit-animation: loading 1.5s ease 0s infinite alternate;
+    }
+  }
+
+  .open-category &:not(.active) {
+    opacity: 0.5;
+  }
+
+}

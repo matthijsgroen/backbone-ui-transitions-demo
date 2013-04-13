@@ -6,31 +6,5 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield :javascript
-    -#:coffee
-      $ ->
-        $('.open-group').addClass('collapsed')
-        $('li:nth-child(4) a').click ->
-          $(this).toggleClass('active')
-          $('ul.categories').toggleClass('selected')
-          $('.open-group').toggleClass('collapsed')
   %body
     = yield
-
-    %section.products
-      %h1 Products
-      %ul.categories
-        - 11.times do |i|
-          %li.category
-            %a{ href: "#categories/#{i}" }
-              = image_tag "//lorempixel.com/100/100/?#{i}"
-        %li.open-group
-          %section
-            %h2 Technology
-
-            %ul.products
-              - 10.times do |j|
-                %li.product
-                  %a{ href: "#categories/#{12}/products/#{j}" }
-                    = image_tag "//lorempixel.com/150/200/technics/?#{12 + j}"
-
-

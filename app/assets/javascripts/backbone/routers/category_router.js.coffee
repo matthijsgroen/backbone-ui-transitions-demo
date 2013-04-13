@@ -3,8 +3,12 @@ class UIDemo.Routers.CategoryRouter extends Backbone.Router
   routes:
     'categories/:id': 'show'
 
-  initialize: ({ @view }) ->
+  initialize: ({ @view, @collection }) ->
 
   show: (id) ->
-    @view.open parseInt(id, 10)
+    category = @collection.get(id)
+    category.loadProducts().then =>
+      @view.open(id)
+    .then null,
+      (error) -> console.log error.message
 

@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require_self
+//= require when/when
+//= require jss/jss
 //= require hamlcoffee
 //= require underscore
 //= require backbone
@@ -19,3 +22,10 @@
 //= require backbone_datalink
 //= require backbone/ui_demo
 //= require_tree .
+
+window.define = function(factory) {
+  try{ delete window.define; } catch(e){ window.define = void 0; } // IE
+  window.when = factory();
+};
+window.define.amd = {};
+

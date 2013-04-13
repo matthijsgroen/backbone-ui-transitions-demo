@@ -9,4 +9,5 @@ UIDemo.app.on 'application:initialize', (world) ->
 
   new UIDemo.Routers.CategoryRouter
     view: productsView
+    collection: world.productCategories
 

@@ -1,35 +1,12 @@
 @import 'compass';
 
-@mixin position($position) {
-  left: (-140px / 2) - 15px + (140px * $position);
-}
-
 section.products {
   background: shade($base-color, 10%);
-
   border: 1px solid black;
 
   h1 {
     color: #333;
   }
-
-  ul.categories {
-    list-style: none;
-    padding: 0;
-    li.category {
-      float: left;
-      padding-left: 0;
-      margin-left: 0;
-      margin: 20px;
-
-      img {
-        vertical-align: bottom;
-      }
-      @include box-shadow(rgba(0,0,0,0.6) 2px 2px 5px);
-    }
-    @include clearfix;
-  }
-
 }
 
 li.open-group {
@@ -66,7 +43,6 @@ li.open-group {
     top: -9px;
     @include rotate(45deg);
     @include box-shadow(#444 3px 3px 9px -2px inset);
-    @include position(4);
   }
   &.collapsed:after {
     -webkit-transition: all 600ms;

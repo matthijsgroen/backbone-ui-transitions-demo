@@ -1,0 +1,6 @@
+[submodule "vendor/assets/javascripts/when"]
+	path = vendor/assets/javascripts/when
+	url = https://github.com/cujojs/when
+[submodule "vendor/assets/javascript/jss"]
+	path = vendor/assets/javascript/jss
+	url = git://github.com/Box9/jss.git
