@@ -7,7 +7,7 @@ class UIDemo.Collections.Products extends Backbone.Collection
   url: ->
     "/product_categories/#{@categoryId}/products.json"
 
-  initialize: ({ @categoryId }) ->
+  initialize: (models, { @categoryId }) ->
 
   parse: (response) ->
     response['products']

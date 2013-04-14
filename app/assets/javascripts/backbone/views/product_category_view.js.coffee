@@ -6,22 +6,15 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
 
   template: JST['product_category']
   events:
-    'click a': 'closeIfOpen'
+    'click a': 'toggleFolder'
 
   initialize: ->
     @model.on 'products:loading', @markLoading, this
     @model.on 'products:loaded', @clearLoading, this
-    @folderView = new UIDemo.Views.ProductsView
-      collection: @model.products
-      category: @model
 
   render: ->
     @$el.html @template this
     this
-
-  activate: ->
-    @transitionAddClass('active').then =>
-      @folderView.render()
 
   markLoading: ->
     @$el.addClass('loading')
@@ -29,11 +22,8 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
   clearLoading: ->
     @$el.removeClass('loading')
 
-  isActive: ->
-    @$el.is('.active')
-
   deactivate: ->
-    @$el.removeClass('loading')
+    return `when`.resolve() unless @$el.is('.active')
     @folderView.close().then =>
       @transitionRemoveClass('active').then =>
         @folderView.remove()
@@ -45,13 +35,21 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
     @model.get 'image_url'
 
   open: ->
-    folderView = @parent.createFolderView(this, collection: @model.products)
-    folderView
+    @model.loadProducts().then (products) =>
+      @folderView ?= new UIDemo.Views.ProductsView
+        collection: products
+        category: @model
+      @parent.openFolder(@folderView.render(), this).then =>
+        `when`.all([@transitionAddClass('active'), @folderView.open()]).then =>
+          @folderView
 
-  closeIfOpen: ->
+  toggleFolder: (event) ->
+    event.preventDefault()
     if @$el.is('.active')
-      Backbone.history.navigate '#', trigger: true
-      return false
-
-
+      @parent.closeAll().then =>
+        Backbone.history.navigate ''
+    else
+      @open().then =>
+        Backbone.history.navigate @categoryUrl()
+    false
 

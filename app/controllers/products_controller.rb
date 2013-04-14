@@ -5,6 +5,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = @collection.all
+    sleep 2
 
     respond_to do |format|
       format.html

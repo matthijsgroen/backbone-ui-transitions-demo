@@ -3,6 +3,6 @@
 #
 
 FactoryGirl.create_list(:product_category, 30).each do |category|
-  FactoryGirl.create_list(:product, 15, category: category)
+  FactoryGirl.create_list(:product, 8, category: category)
 end
 

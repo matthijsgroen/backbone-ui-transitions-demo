@@ -4,13 +4,11 @@ class UIDemo.Routers.CategoryRouter extends Backbone.Router
     'categories/:id': 'show'
     '': 'index'
 
-  initialize: ({ @view, @collection }) ->
+  initialize: ({ @categoriesView }) ->
 
   index: ->
-    @view.closeAll()
+    @categoriesView.closeAll()
 
   show: (id) ->
-    category = @collection.get(id)
-    category.loadProducts().then (products) =>
-      @view.open(id)
+    @categoriesView.open id
 

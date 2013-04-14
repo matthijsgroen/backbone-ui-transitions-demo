@@ -13,10 +13,9 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
     super
     $(window).on 'resize', _.bind(@_resize, this)
 
-  open: (id) ->
-    @closeAll().then =>
-      @deactivate()
-      @activateView(id)
+  open: (modelId) ->
+    @activeView = @findViewForModel(modelId)
+    @activeView.open()
 
   deactivate: ->
     @$el.addClass('open-category')
@@ -25,16 +24,9 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
     @$el.removeClass('open-category')
 
   closeAll: ->
-    view = @itemViews.find (v) -> v.isActive()
-    p = view?.deactivate()
-    `when(p)`.then =>
+    deactivations = @itemViews.map (v) -> v.deactivate()
+    `when`.all(deactivations).then =>
       @activate()
-
-  activateView: (modelId) ->
-    @activeView = @findViewForModel(modelId)
-    @activeView.activate().then (nestedView) =>
-      @insertFolder(nestedView, @itemViews.indexOf(@activeView))
-      nestedView.open()
 
   _resize: ->
     return unless @activeView?
@@ -44,6 +36,11 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
     containerWidth = @$('ul.categories').width()
     itemWidth = @$('ul.categories li.category:first').outerWidth(true)
     Math.floor(containerWidth / itemWidth)
+
+  openFolder: (folderView, view) ->
+    @closeAll().then =>
+      @deactivate()
+      @insertFolder folderView, @collection.indexOf(view.model)
 
   insertFolder: (viewElement, index) ->
     amountPerRow = @amountPerRow()
@@ -59,4 +56,5 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
       left: "#{(140.0 / 2) - 15 + (140 * indexInRow)}px"
     }
     $(@$("ul.categories li.category").get(injectPosition - 1)).after viewElement.$el
+    viewElement.delegateEvents()
 

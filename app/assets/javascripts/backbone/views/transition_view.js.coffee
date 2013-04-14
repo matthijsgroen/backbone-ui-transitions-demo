@@ -7,8 +7,7 @@ class UIDemo.Views.TransitionView extends Backbone.View
 
   transitionAddClass: (className) ->
     p = @_transitionPromise()
-    @_delay(=> @$el.addClass className).then ->
-      p
+    @_delay(=> @$el.addClass className).then -> p
 
   _transitionPromise: ->
     defer = `when`.defer()
@@ -19,7 +18,7 @@ class UIDemo.Views.TransitionView extends Backbone.View
         transitionEndEventHandler
         false
       )
-      defer.resolve()
+      defer.resolve(this)
 
     @el.addEventListener(
       transitionEvent
@@ -40,5 +39,5 @@ class UIDemo.Views.TransitionView extends Backbone.View
   _delay: (code) ->
     defer = `when`.defer()
     setTimeout ->
-      `when(code())`.then => defer.resolve()
+      `when(code())`.then (result) => defer.resolve(result)
     defer.promise
