@@ -21,10 +21,14 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
   deactivate: ->
     @$el.addClass('open-category')
 
+  activate: ->
+    @$el.removeClass('open-category')
+
   closeAll: ->
     view = @itemViews.find (v) -> v.isActive()
     p = view?.deactivate()
-    `when(p)`
+    `when(p)`.then =>
+      @activate()
 
   activateView: (modelId) ->
     @activeView = @findViewForModel(modelId)
@@ -33,6 +37,7 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
       nestedView.open()
 
   _resize: ->
+    return unless @activeView?
     @insertFolder(@activeView.folderView, @itemViews.indexOf(@activeView))
 
   amountPerRow: ->

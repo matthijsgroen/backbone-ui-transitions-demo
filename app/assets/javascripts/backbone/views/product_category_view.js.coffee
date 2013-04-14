@@ -5,6 +5,8 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
   className: 'category'
 
   template: JST['product_category']
+  events:
+    'click a': 'closeIfOpen'
 
   initialize: ->
     @model.on 'products:loading', @markLoading, this
@@ -45,5 +47,11 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
   open: ->
     folderView = @parent.createFolderView(this, collection: @model.products)
     folderView
+
+  closeIfOpen: ->
+    if @$el.is('.active')
+      Backbone.history.navigate '#', trigger: true
+      return false
+
 
 

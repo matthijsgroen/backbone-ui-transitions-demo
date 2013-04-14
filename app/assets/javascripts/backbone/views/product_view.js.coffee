@@ -5,7 +5,6 @@ class UIDemo.Views.ProductView extends Backbone.View
   template: JST['product']
 
   render: ->
-    console.log 'stuff'
     @$el.html @template this
     this
 
@@ -13,4 +12,4 @@ class UIDemo.Views.ProductView extends Backbone.View
     "#hello/stuff"
 
   imageUrl: ->
-    @model.get('imageUrl')
+    @model.get('image_url')
