@@ -1,12 +1,12 @@
 
 class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
 
-  open: ($image) ->
-    @_placeInFixed($image)
+  open: ($link) ->
+    @_placeInFixed($link)
     $layer = @_injectDimmedLayer()
-    imageRotate = @_delay(-> $image.addClass 'animate').then =>
-      @transitionAddClass('place-right', $image).then =>
-        @transitionAddClass('place-image', $image)
+    imageRotate = @_delay(-> $link.addClass 'animate').then =>
+      @transitionAddClass('place-right', $link).then =>
+        @transitionAddClass('place-image', $link)
 
     layerShift = @_delay(
       => @transitionRemoveClass('hidden', $layer)
@@ -14,30 +14,29 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
     )
     `when`.all [imageRotate, layerShift]
 
-  close: ($image) ->
+  close: ($link) ->
     $layer = $('body > .product-layer')
-    $image.addClass('reverse')
 
-    imageRotate = @transitionRemoveClass('place-image', $image).then =>
-      @transitionRemoveClass('place-right', $image)
+    imageRotate = @transitionRemoveClass('place-image', $link).then =>
+      @transitionRemoveClass('place-right', $link)
     layerShift = @_delay(
       => @transitionAddClass('hidden', $layer)
       500
     )
     `when`.all([imageRotate, layerShift]).then =>
       $layer.remove()
-      $image.removeAttr('style').removeClass('animate')
-      $image.parent().find('img.opened').remove()
+      $link.removeAttr('style').removeClass('animate')
+      $link.parent().find('img.opened').remove()
 
-  _placeInFixed: ($image) ->
+  _placeInFixed: ($link) ->
     $stubImage = $("<img />").attr
       src: ''
       class: 'invisible opened'
-      width: $image.width()
-      height: $image.height()
+      width: $link.width()
+      height: $link.height()
 
-    $image.before $stubImage
-    $image.css
+    $link.before $stubImage
+    $link.css
       position: 'fixed'
     .position(
       my: 'top right'

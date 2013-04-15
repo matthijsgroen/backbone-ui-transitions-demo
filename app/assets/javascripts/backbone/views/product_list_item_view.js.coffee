@@ -22,13 +22,17 @@ class UIDemo.Views.ProductListItemView extends Backbone.View
     @detailView ?= new UIDemo.Views.ProductDetailView
        model: @model
     $('body').append @detailView.el
-    @detailView.open(@$('img')).then =>
+
+    # submit the 'a' instead of the img.
+    # this way we rotate the entire link and can provide a custom backface to the image.
+    # see: http://desandro.github.io/3dtransforms/docs/card-flip.html
+    @detailView.open(@$('a')).then =>
       @detailView
     #   @model.loadDetails().then =>
     #     @detailView
 
   close: ->
-    @detailView.close(@$('img:not(.opened)')).then =>
+    @detailView.close(@$('a')).then =>
       @detailView.remove()
 
   openProduct: (event) ->
