@@ -40,6 +40,7 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
   openFolder: (folderView, view) ->
     @closeAll().then =>
       @deactivate()
+      @activeView = view
       @insertFolder folderView, @collection.indexOf(view.model)
 
   insertFolder: (viewElement, index) ->

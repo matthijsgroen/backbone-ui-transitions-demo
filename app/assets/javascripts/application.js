@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require_self
-//= require when/when
 //= require jss/jss
+//= require when/when
 //= require hamlcoffee
 //= require underscore
 //= require backbone
