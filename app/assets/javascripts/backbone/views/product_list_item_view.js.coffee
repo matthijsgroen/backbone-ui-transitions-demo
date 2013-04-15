@@ -18,19 +18,25 @@ class UIDemo.Views.ProductListItemView extends Backbone.View
     @model.get('image_url')
 
   open: ->
-    console.log "opening Product: #{@model.get('name')}"
     # ensure existence of detailView
-    # @detailView ?= new UIDemo.View.ProductDetailView
-    #   model: @model
-    #
-    # $('body').append @detailView
-    # @detailView.open @$('img').then =>
+    @detailView ?= new UIDemo.Views.ProductDetailView
+       model: @model
+    $('body').append @detailView.el
+    @detailView.open(@$('img')).then =>
+      @detailView
     #   @model.loadDetails().then =>
     #     @detailView
-    `when`.resolve()
+
+  close: ->
+    @detailView.close(@$('img:not(.opened)')).then =>
+      @detailView.remove()
 
   openProduct: (event) ->
     event.preventDefault()
-    @open().then =>
-      Backbone.history.navigate @url()
+    if @$('img:first').is('.opened')
+      @close().then =>
+        Backbone.history.navigate "#categories/#{@model.collection.categoryId}"
+    else
+      @open().then =>
+        Backbone.history.navigate @url()
     false

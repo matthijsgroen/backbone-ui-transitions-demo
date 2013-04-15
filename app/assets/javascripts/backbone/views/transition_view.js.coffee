@@ -1,26 +1,26 @@
 
 class UIDemo.Views.TransitionView extends Backbone.View
 
-  transitionRemoveClass: (className) ->
-    p = @_transitionPromise()
-    @_delay(=> @$el.removeClass className).then -> p
+  transitionRemoveClass: (className, $el = @$el) ->
+    p = @_transitionPromise($el)
+    @_delay(=> $el.removeClass className).then -> p
 
-  transitionAddClass: (className) ->
-    p = @_transitionPromise()
-    @_delay(=> @$el.addClass className).then -> p
+  transitionAddClass: (className, $el = @$el) ->
+    p = @_transitionPromise($el)
+    @_delay(=> $el.addClass className).then -> p
 
-  _transitionPromise: ->
+  _transitionPromise: ($el) ->
     defer = `when`.defer()
     transitionEvent = @_whichTransitionEvent()
     transitionEndEventHandler = =>
-      @el.removeEventListener(
+      $el[0].removeEventListener(
         transitionEvent
         transitionEndEventHandler
         false
       )
       defer.resolve(this)
 
-    @el.addEventListener(
+    $el[0].addEventListener(
       transitionEvent
       transitionEndEventHandler
       false
@@ -36,8 +36,10 @@ class UIDemo.Views.TransitionView extends Backbone.View
       'WebkitTransition': 'webkitTransitionEnd'
     return event for property, event of transitions when el.style[property]?
 
-  _delay: (code) ->
+  _delay: (code, time = 0) ->
     defer = `when`.defer()
-    setTimeout ->
-      `when(code())`.then (result) => defer.resolve(result)
+    setTimeout(
+      -> `when(code())`.then (result) => defer.resolve(result)
+      time
+    )
     defer.promise

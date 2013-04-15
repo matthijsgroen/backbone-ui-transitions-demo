@@ -2,7 +2,7 @@
 class UIDemo.Routers.ProductRouter extends Backbone.Router
 
   routes:
-    'categories/:category_id/products/:id': 'show'
+    'categories/:categoryId/products/:id': 'show'
 
   initialize: ({ @categoriesView }) ->
 
