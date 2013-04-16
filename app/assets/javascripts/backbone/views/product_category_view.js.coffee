@@ -31,11 +31,7 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
   open: (options = {}) ->
     return `when`.resolve(@folderView) if @isOpen()
     @model.loadProducts().then (products) =>
-      @folderView ?= new UIDemo.Views.ProductsView
-        collection: products
-        category: @model
-      @folderView.render()
-
+      @_createFolderView(products)
       @parent.activateFolder(this).then =>
         `when`.all([@transitionAddClass('active'), @folderView.open()]).then =>
           @trigger('opened', this) unless options.silent?
@@ -48,7 +44,7 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
     return `when`.resolve() unless @isOpen()
     @folderView.close().then =>
       @transitionRemoveClass('active').then =>
-        @folderView.remove()
+        @_destroyFolderView()
         @trigger('closed', this) unless options.silent?
 
   toggleFolder: (event) ->
@@ -60,4 +56,17 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
       @open().then =>
         Backbone.history.navigate @categoryUrl()
     false
+
+  _createFolderView: (products) ->
+    return @folderView if @folderView?
+    @folderView = new UIDemo.Views.ProductsView
+      collection: products
+      category: @model
+    @folderView.render()
+
+  _destroyFolderView: ->
+    @folderView.remove()
+    delete @['folderView']
+
+
 
