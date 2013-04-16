@@ -1,0 +1,22 @@
+
+section.product-details {
+  z-index: 340;
+  position: fixed;
+  top: 10%;
+  left: 40%;
+  right: 5%;
+  -webkit-transition: opacity 0.2s, margin-top 0.2s;
+  opacity: 1.0;
+
+  h1 {
+    color: white;
+    font-size: 2em;
+    text-shadow: 2px 2px 3px #000;
+  }
+
+  &.hidden {
+    opacity: 0;
+    margin-top: -50px;
+  }
+
+}

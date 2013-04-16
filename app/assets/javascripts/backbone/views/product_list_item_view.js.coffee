@@ -21,7 +21,7 @@ class UIDemo.Views.ProductListItemView extends Backbone.View
     # ensure existence of detailView
     @detailView ?= new UIDemo.Views.ProductDetailView
        model: @model
-    $('body').append @detailView.el
+    $('body').append @detailView.render().el
 
     # submit the 'a' instead of the img.
     # this way we rotate the entire link and can provide a custom backface to the image.

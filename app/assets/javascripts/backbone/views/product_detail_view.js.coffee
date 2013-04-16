@@ -1,5 +1,15 @@
 
 class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
+  tagName: 'section'
+  className: 'product-details hidden'
+  template: JST['product_details']
+
+  render: ->
+    @$el.html @template this
+    this
+
+  productName: ->
+    @model.get('name')
 
   open: ($link) ->
     @_placeInFixed($link)
@@ -9,10 +19,10 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
         @transitionAddClass('place-image', $link)
 
     layerShift = @_delay(
-      => @transitionRemoveClass('hidden', $layer)
+      => @transitionRemoveClass('hidden', $layer).then => @transitionRemoveClass 'hidden'
       500
     )
-    `when`.all [imageRotate, layerShift]
+    `when`.all([imageRotate, layerShift]).then =>
 
   close: ($link) ->
     $layer = $('body > .product-layer')
@@ -20,10 +30,8 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
 
     imageRotate = @transitionRemoveClass('place-image', $link).then =>
       @transitionRemoveClass('place-right', $link)
-    layerShift = @_delay(
-      => @transitionAddClass('hidden', $layer)
-      100
-    )
+    layerShift = @transitionAddClass('hidden').then =>
+      @transitionAddClass('hidden', $layer)
     `when`.all([imageRotate, layerShift]).then =>
       $layer.remove()
       $link.removeAttr('style').removeClass('animate')
