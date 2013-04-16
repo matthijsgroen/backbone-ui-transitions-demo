@@ -22,31 +22,39 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
   clearLoading: ->
     @$el.removeClass('loading')
 
-  deactivate: ->
-    return `when`.resolve() unless @$el.is('.active')
-    @folderView.close().then =>
-      @transitionRemoveClass('active').then =>
-        @folderView.remove()
-
   categoryUrl: ->
     "#categories/#{@model.id}"
 
   categoryImageUrl: ->
     @model.get 'image_url'
 
-  open: ->
+  open: (options = {}) ->
+    return `when`.resolve(@folderView) if @isOpen()
     @model.loadProducts().then (products) =>
       @folderView ?= new UIDemo.Views.ProductsView
         collection: products
         category: @model
-      @parent.openFolder(@folderView.render(), this).then =>
+      @folderView.render()
+
+      @parent.activateFolder(this).then =>
         `when`.all([@transitionAddClass('active'), @folderView.open()]).then =>
+          @trigger('opened', this) unless options.silent?
           @folderView
+
+  isOpen: ->
+    @$el.is('.active')
+
+  close: (options = {})->
+    return `when`.resolve() unless @isOpen()
+    @folderView.close().then =>
+      @transitionRemoveClass('active').then =>
+        @folderView.remove()
+        @trigger('closed', this) unless options.silent?
 
   toggleFolder: (event) ->
     event.preventDefault()
-    if @$el.is('.active')
-      @parent.closeAll().then =>
+    if @isOpen()
+      @close().then =>
         Backbone.history.navigate ''
     else
       @open().then =>
