@@ -23,7 +23,7 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
     @$el.removeClass('loading')
 
   categoryUrl: ->
-    "#categories/#{@model.id}"
+    "/categories/#{@model.id}"
 
   categoryImageUrl: ->
     @model.get 'image_url'

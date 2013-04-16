@@ -22,7 +22,10 @@ class ProductsController < ApplicationController
 
   def get_resource_collection
     @collection = Product
-    @collection = ProductCategory.find(params[:product_category_id]).products if params[:product_category_id].present?
+    if params[:product_category_id].present?
+      @product_category = ProductCategory.find(params[:product_category_id])
+      @collection = @product_category.products
+    end
   end
 
 end

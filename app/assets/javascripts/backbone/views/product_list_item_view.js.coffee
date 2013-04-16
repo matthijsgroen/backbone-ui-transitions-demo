@@ -12,7 +12,7 @@ class UIDemo.Views.ProductListItemView extends Backbone.View
     this
 
   url: ->
-    "#categories/#{@model.collection.categoryId}/products/#{@model.id}"
+    "/categories/#{@model.collection.categoryId}/products/#{@model.id}"
 
   imageUrl: ->
     @model.get('image_url')
@@ -31,15 +31,18 @@ class UIDemo.Views.ProductListItemView extends Backbone.View
     #   @model.loadDetails().then =>
     #     @detailView
 
+  isOpen: ->
+    @$('img:first').is('.opened')
+
   close: ->
     @detailView.close(@$('a')).then =>
       @detailView.remove()
 
   openProduct: (event) ->
     event.preventDefault()
-    if @$('img:first').is('.opened')
+    if @isOpen()
       @close().then =>
-        Backbone.history.navigate "#categories/#{@model.collection.categoryId}"
+        Backbone.history.navigate "/categories/#{@model.collection.categoryId}"
     else
       @open().then =>
         Backbone.history.navigate @url()

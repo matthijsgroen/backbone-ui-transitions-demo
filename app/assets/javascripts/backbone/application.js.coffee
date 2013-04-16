@@ -13,7 +13,7 @@ class UIDemo.Application
 
     # Event handlers will use the world objects to instantiate views and routers
     @trigger 'application:initialize', world
-    Backbone.history?.start() unless Backbone.History.started
+    Backbone.history?.start(pushState: yes) unless Backbone.History.started
     @initialized = yes
 
 _.extend UIDemo.Application.prototype, Backbone.Events

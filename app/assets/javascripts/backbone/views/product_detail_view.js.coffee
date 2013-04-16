@@ -45,7 +45,6 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
       at: 'top right'
       of: $stubImage
     )
-
     $link.append $('<div />').addClass('product-backface')
 
   _injectDimmedLayer: ->

@@ -2,4 +2,6 @@
   :coffee
     UIDemo.app.on 'application:initialize', (world) ->
       world.productCategories.reset #{product_categories_json}
+      activeCategory = world.productCategories.get(#{@product_category.id})
+      activeCategory.products.reset #{product_category_products_json}
 

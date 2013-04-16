@@ -1,6 +1,6 @@
 UiDemo::Application.routes.draw do
 
-  resources :product_categories do
+  resources :product_categories, path: 'categories' do
     resources :products
   end
 
