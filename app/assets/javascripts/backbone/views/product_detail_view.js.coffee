@@ -16,6 +16,7 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
 
   close: ($link) ->
     $layer = $('body > .product-layer')
+    $stubImage = $link.parent().find('img.opened')
 
     imageRotate = @transitionRemoveClass('place-image', $link).then =>
       @transitionRemoveClass('place-right', $link)
@@ -26,7 +27,8 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
     `when`.all([imageRotate, layerShift]).then =>
       $layer.remove()
       $link.removeAttr('style').removeClass('animate')
-      $link.parent().find('img.opened').remove()
+      $link.find('.product-backface').remove()
+      $stubImage.remove()
 
   _placeInFixed: ($link) ->
     $stubImage = $("<img />").attr
@@ -43,6 +45,8 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
       at: 'top right'
       of: $stubImage
     )
+
+    $link.append $('<div />').addClass('product-backface')
 
   _injectDimmedLayer: ->
     $layer = $('<div />').attr
