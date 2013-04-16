@@ -39,7 +39,10 @@ class UIDemo.Views.TransitionView extends Backbone.View
     return event for property, event of transitions when el.style[property]?
 
   _delay: (code, time = 0) ->
-    time = 0 if $('body').is('.no-transitions')
+    if $('body').is('.no-transitions')
+      result = code()
+      `when`.resolve(result)
+
     defer = `when`.defer()
     setTimeout(
       -> `when(code())`.then (result) => defer.resolve(result)
