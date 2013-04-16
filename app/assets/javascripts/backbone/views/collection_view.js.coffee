@@ -6,25 +6,39 @@ class UIDemo.Views.CollectionView extends UIDemo.Views.TransitionView
 
   initialize: ->
     @itemViews = _([])
-    @collection.on 'reset', @render, this
+    @collection.on 'reset', @_reset, this
+    @_reset()
 
   delegateEvents: ->
     super
     @itemViews.each (v) -> v.delegateEvents()
 
   render: ->
-    @$el.html @template this
+    $element = $(@template this)
+    $container = $element.filter(@collectionSelector)
+    $container = $element.find(@collectionSelector) if $container.length is 0
+    @itemViews.each (itemView) =>
+      $container.append itemView.render().el
+
+    @$el.html $element
+    this
+
+  _reset: ->
+    @itemViews.invoke 'remove'
+    @itemViews = _([])
     @collection.each (model) =>
       @addItemView model
-    this
+    @render()
 
   addItemView: (model) ->
     itemView = new @itemViewClass
       model: model
     itemView.parent = this
-    @$(@collectionSelector).append itemView.render().el
+
+
     itemView.on 'all', @_bubbleEvents, this
     @itemViews.push itemView
+    itemView
 
   findViewForModel: (modelId) ->
     modelId = parseInt modelId, 10
