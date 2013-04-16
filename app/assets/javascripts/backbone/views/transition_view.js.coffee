@@ -10,6 +10,8 @@ class UIDemo.Views.TransitionView extends Backbone.View
     @_delay(=> $el.addClass className).then -> p
 
   _transitionPromise: ($el) ->
+    return `when`.resolve(this) if $('body').is('.no-transitions')
+
     defer = `when`.defer()
     transitionEvent = @_whichTransitionEvent()
     transitionEndEventHandler = =>
@@ -37,6 +39,7 @@ class UIDemo.Views.TransitionView extends Backbone.View
     return event for property, event of transitions when el.style[property]?
 
   _delay: (code, time = 0) ->
+    time = 0 if $('body').is('.no-transitions')
     defer = `when`.defer()
     setTimeout(
       -> `when(code())`.then (result) => defer.resolve(result)

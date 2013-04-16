@@ -22,13 +22,17 @@ li.category {
   margin-left: 0;
   margin: 20px;
 
-  @include transition(outline 600ms, opacity 300ms);
+  .transitions & {
+    @include transition(outline 600ms, opacity 300ms);
+  }
   outline: 0px solid white;
   @include box-shadow(rgba(0,0,0,0.6) 2px 2px 5px);
 
   img {
     vertical-align: bottom;
-    @include transition(opacity 300ms);
+    .transitions & {
+      @include transition(opacity 300ms);
+    }
   }
 
   &.active {

@@ -7,10 +7,12 @@ li.product {
 
     &.animate {
       z-index: 300;
-      &, > * {
-        -webkit-transition-property: height, width, -webkit-transform, left, top;
-        -webkit-transition-duration: 0.5s;
-        -webkit-transition-timing-function: linear;
+      .transitions & {
+        &, > * {
+          -webkit-transition-property: height, width, -webkit-transform, left, top;
+          -webkit-transition-duration: 0.5s;
+          -webkit-transition-timing-function: linear;
+        }
       }
     }
 
@@ -78,7 +80,9 @@ li.product {
   top: 0;
   left: 0;
   z-index: 200;
-  -webkit-transition: width 0.5s ease;
+  .transitions & {
+    -webkit-transition: width 0.5s ease;
+  }
   width: 100%;
   height: 100%;
   background: rgba(30, 30, 30, 0.95);

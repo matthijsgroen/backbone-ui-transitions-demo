@@ -14,6 +14,10 @@ class UIDemo.Application
     # Event handlers will use the world objects to instantiate views and routers
     @trigger 'application:initialize', world
     Backbone.history?.start(pushState: yes) unless Backbone.History.started
+    setTimeout(
+      -> $('body').removeClass('no-transitions').addClass('transitions')
+      1000
+    )
     @initialized = yes
 
 _.extend UIDemo.Application.prototype, Backbone.Events
