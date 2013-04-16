@@ -10,7 +10,7 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
 
     layerShift = @_delay(
       => @transitionRemoveClass('hidden', $layer)
-      1000
+      500
     )
     `when`.all [imageRotate, layerShift]
 
@@ -22,7 +22,7 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
       @transitionRemoveClass('place-right', $link)
     layerShift = @_delay(
       => @transitionAddClass('hidden', $layer)
-      500
+      100
     )
     `when`.all([imageRotate, layerShift]).then =>
       $layer.remove()
