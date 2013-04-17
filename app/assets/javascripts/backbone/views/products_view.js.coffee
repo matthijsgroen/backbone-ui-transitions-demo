@@ -27,7 +27,6 @@ class UIDemo.Views.ProductsView extends UIDemo.Views.CollectionView
     activeView.open()
 
   closeAll: ->
-    console.log 'closing all'
     closed = @itemViews.map (v) -> v.close()
     `when`.all(closed)
 

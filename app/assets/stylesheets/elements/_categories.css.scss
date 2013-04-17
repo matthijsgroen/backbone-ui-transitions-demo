@@ -23,7 +23,7 @@ li.category {
   margin: 20px;
 
   .transitions & {
-    @include transition(outline 600ms, opacity 300ms);
+    @include transition( opacity 300ms, outline 600ms );
   }
   outline: 0px solid white;
   @include box-shadow(rgba(0,0,0,0.6) 2px 2px 5px);
