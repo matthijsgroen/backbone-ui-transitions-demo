@@ -1,10 +1,16 @@
 module ApplicationHelper
 
   def product_categories_json
-    (@product_categories || ProductCategory.all).to_json(only: [:id, :name, :image_url])
+    serialize_json_array((@product_categories || ProductCategory.all), ProductCategorySerializer)
   end
 
   def product_category_products_json
-    @product_category.products.to_json(only: [:id, :name, :image_url])
+    serialize_json_array(@product_category.products, ProductSerializer)
+  end
+
+  private
+
+  def serialize_json_array(list, serializer)
+    "[" << list.map { |model| serializer.new(model).to_json }.join(',') << "]"
   end
 end

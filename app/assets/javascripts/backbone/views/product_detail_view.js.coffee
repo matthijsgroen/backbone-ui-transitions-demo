@@ -22,7 +22,7 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
       => @transitionRemoveClass('hidden', $layer).then => @transitionRemoveClass 'hidden'
       500
     )
-    `when`.all([imageRotate, layerShift]).then =>
+    `when`.all([imageRotate, layerShift])
 
   close: ($link) ->
     $layer = $('body > .product-layer')

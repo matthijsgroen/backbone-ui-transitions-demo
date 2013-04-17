@@ -1,3 +1,5 @@
 class ProductCategorySerializer < ActiveModel::Serializer
-  attributes :id
+  self.root = false
+  attributes :id, :name, :image_url
+  attribute :image_url, key: 'imageUrl'
 end

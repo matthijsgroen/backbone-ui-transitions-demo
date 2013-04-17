@@ -15,7 +15,7 @@ class UIDemo.Views.ProductListItemView extends Backbone.View
     "/categories/#{@model.collection.categoryId}/products/#{@model.id}"
 
   imageUrl: ->
-    @model.get('image_url')
+    @model.get('imageUrl')
 
   open: ->
     # ensure existence of detailView

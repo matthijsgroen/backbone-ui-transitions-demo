@@ -26,7 +26,7 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
     "/categories/#{@model.id}"
 
   categoryImageUrl: ->
-    @model.get 'image_url'
+    @model.get 'imageUrl'
 
   open: (options = {}) ->
     return `when`.resolve(@folderView) if @isOpen()
