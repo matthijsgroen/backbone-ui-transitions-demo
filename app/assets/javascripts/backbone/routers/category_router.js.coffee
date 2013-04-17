@@ -10,5 +10,6 @@ class UIDemo.Routers.CategoryRouter extends Backbone.Router
     @categoriesView.closeAll()
 
   show: (id) ->
-    @categoriesView.open id
+    @categoriesView.open(id).then (categoryProductsView) =>
+      categoryProductsView.closeAll()
 

@@ -35,8 +35,11 @@ class UIDemo.Views.ProductListItemView extends Backbone.View
     @$('img:first').is('.opened')
 
   close: ->
+    return `when`.resolve() unless @detailView?
+
     @detailView.close(@$('a')).then =>
       @detailView.remove()
+      delete @['detailView']
 
   openProduct: (event) ->
     event.preventDefault()

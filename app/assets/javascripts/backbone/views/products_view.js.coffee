@@ -19,9 +19,16 @@ class UIDemo.Views.ProductsView extends UIDemo.Views.CollectionView
     @transitionRemoveClass 'collapsed'
 
   close: ->
-    @transitionAddClass 'collapsed'
+    @closeAll().then =>
+      @transitionAddClass 'collapsed'
 
   openProduct: (productId) ->
     activeView = @findViewForModel(productId)
     activeView.open()
+
+  closeAll: ->
+    console.log 'closing all'
+    closed = @itemViews.map (v) -> v.close()
+    `when`.all(closed)
+
 

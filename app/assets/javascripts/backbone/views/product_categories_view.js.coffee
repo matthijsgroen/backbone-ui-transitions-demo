@@ -46,9 +46,11 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
       @itemViews.size()
     )
 
-    jss 'li.open-group::after', {
-      left: "#{(140.0 / 2) - 15 + (140 * indexInRow)}px"
-    }
+    setTimeout ->
+      jss 'li.open-group::after', {
+        left: "#{(140.0 / 2) - 15 + (140 * indexInRow)}px"
+      }
+
     $(@$("ul.categories li.category").get(injectPosition - 1)).after view.folderView.$el
     view.folderView.delegateEvents()
 
