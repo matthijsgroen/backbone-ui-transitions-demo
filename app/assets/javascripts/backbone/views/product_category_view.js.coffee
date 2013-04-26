@@ -9,8 +9,8 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
     'click a': 'toggleFolder'
 
   initialize: ->
-    @model.on 'products:loading', @markLoading, this
-    @model.on 'products:loaded', @clearLoading, this
+    @listenTo @model, 'products:loading', @markLoading
+    @listenTo @model, 'products:loaded', @clearLoading
 
   render: ->
     @$el.html @template this

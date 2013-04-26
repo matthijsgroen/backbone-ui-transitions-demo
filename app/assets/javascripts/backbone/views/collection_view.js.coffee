@@ -6,7 +6,7 @@ class UIDemo.Views.CollectionView extends UIDemo.Views.TransitionView
 
   initialize: ->
     @itemViews = _([])
-    @collection.on 'reset', @_reset, this
+    @listenTo @collection, 'reset', @_reset
     @_reset()
 
   delegateEvents: ->

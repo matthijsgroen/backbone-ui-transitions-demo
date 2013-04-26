@@ -11,7 +11,7 @@ class UIDemo.Models.ProductCategory extends Backbone.Model
     if @products.length isnt 0
       return `when`.resolve @products
 
-    @trigger 'products:loading'
+    @trigger 'products:loading', this
     p = @products.fetch()
     `when(p)`.then =>
       @trigger 'products:loaded', this, @products

@@ -18,7 +18,7 @@
 //= require when/when
 //= require hamlcoffee
 //= require underscore
-//= require backbone
+//= require backbone-js/backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/ui_demo

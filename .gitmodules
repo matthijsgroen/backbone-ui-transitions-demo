@@ -4,3 +4,6 @@
 [submodule "vendor/assets/javascripts/jss"]
 	path = vendor/assets/javascripts/jss
 	url = git://github.com/Box9/jss.git
+[submodule "vendor/assets/javascripts/backbone-js"]
+	path = vendor/assets/javascripts/backbone-js
+	url = git://github.com/documentcloud/backbone.git

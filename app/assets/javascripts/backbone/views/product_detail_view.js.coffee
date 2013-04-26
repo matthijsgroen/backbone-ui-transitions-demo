@@ -4,12 +4,18 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
   className: 'product-details hidden'
   template: JST['product_details']
 
+  initialize: ->
+    @listenTo @model, 'change:description', @render
+
   render: ->
     @$el.html @template this
     this
 
   productName: ->
     @model.get('name')
+
+  productDescription: ->
+    @model.get('description')
 
   open: ($link) ->
     @_placeInFixed($link)
