@@ -6,16 +6,41 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
 
   initialize: ->
     @listenTo @model, 'change:description', @render
+    opts =
+      lines: 13, # The number of lines to draw
+      length: 20, # The length of each line
+      width: 10, # The line thickness
+      radius: 30, # The radius of the inner circle
+      corners: 1, # Corner roundness (0..1)
+      rotate: 0, # The rotation offset
+      direction: 1, # 1: clockwise, -1: counterclockwise
+      color: '#fff', # #rgb or #rrggbb
+      speed: 0.7, # Rounds per second
+      trail: 21, # Afterglow percentage
+      shadow: true, # Whether to render a shadow
+      hwaccel: false, # Whether to use hardware acceleration
+      className: 'spinner', # The CSS class to assign to the spinner
+      zIndex: 2e9, # The z-index (defaults to 2000000000)
+      top: 'auto', # Top position relative to parent in px
+      left: 'auto' # Left position relative to parent in px
+    @spinner = new Spinner(opts).spin()
 
   render: ->
     @$el.html @template this
+
+    if @$('.description').text() is ''
+      @$('.description').append @spinner.el
+    else
+      @spinner.stop()
     this
 
   productName: ->
     @model.get('name')
 
   productDescription: ->
-    @model.get('description')
+    markdownDescription = @model.get('description')
+    return '' unless markdownDescription
+    markdown.toHTML markdownDescription
 
   open: ($link) ->
     @_placeInFixed($link)
@@ -28,6 +53,11 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
       => @transitionRemoveClass('hidden', $layer).then => @transitionRemoveClass 'hidden'
       500
     )
+    # Load data during transition (blocks url navigate)
+    #`when`.all([imageRotate, layerShift, @model.fetchDetails()])
+
+    # Load data during transition and do not block transition
+    @model.fetchDetails()
     `when`.all([imageRotate, layerShift])
 
   close: ($link) ->

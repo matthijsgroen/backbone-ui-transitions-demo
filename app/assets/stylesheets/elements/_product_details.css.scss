@@ -16,6 +16,17 @@ section.product-details {
     text-shadow: 2px 2px 3px #000;
   }
 
+  p {
+    color: white;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 3px #000;
+  }
+
+  .spinner {
+    left: 50%;
+    top: 70px;
+  }
+
   &.hidden {
     opacity: 0;
     margin-top: -50px;

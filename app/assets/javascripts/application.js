@@ -19,6 +19,9 @@
 //= require hamlcoffee
 //= require underscore
 //= require backbone-js/backbone
+//= require markdown-js/lib/markdown
+//= require spin-js/spin
+//= require spin-js/jquery.spin
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/ui_demo

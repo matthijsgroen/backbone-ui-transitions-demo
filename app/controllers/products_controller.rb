@@ -15,7 +15,14 @@ class ProductsController < ApplicationController
 
   def show
     @product = @collection.find params[:id]
+    sleep 2
     respond_with @product
+  end
+
+  def details
+    @product = @collection.find params[:product_id]
+    sleep 2
+    respond_with @product, serializer: ProductDetailsSerializer
   end
 
   private

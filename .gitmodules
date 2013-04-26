@@ -7,3 +7,9 @@
 [submodule "vendor/assets/javascripts/backbone-js"]
 	path = vendor/assets/javascripts/backbone-js
 	url = git://github.com/documentcloud/backbone.git
+[submodule "vendor/assets/javascripts/markdown-js"]
+	path = vendor/assets/javascripts/markdown-js
+	url = git://github.com/evilstreak/markdown-js.git
+[submodule "vendor/assets/javascripts/spin-js"]
+	path = vendor/assets/javascripts/spin-js
+	url = git://github.com/fgnass/spin.js.git
