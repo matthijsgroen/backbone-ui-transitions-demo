@@ -49,7 +49,7 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
 
     setTimeout ->
       jss 'li.open-group::after', {
-        left: "#{(140.0 / 2) - 15 + (140 * indexInRow)}px"
+        left: "#{(140.0 / 2) + (140 * indexInRow)}px"
       }
 
     $(@$("ul.categories li.category").get(injectPosition - 1)).after view.folderView.$el
