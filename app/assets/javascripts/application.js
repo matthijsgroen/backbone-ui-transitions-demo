@@ -13,19 +13,25 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//
 //= require_self
+//
 //= require jss/jss
 //= require when/when
 //= require hamlcoffee
+//
 //= require underscore
 //= require backbone-js/backbone
+//
 //= require markdown-js/lib/markdown
+//
 //= require spin-js/spin
 //= require spin-js/jquery.spin
+//
 //= require backbone_rails_sync
 //= require backbone_datalink
+//
 //= require backbone/ui_demo
-//= require_tree .
 
 window.define = function(factory) {
   try{ delete window.define; } catch(e){ window.define = void 0; } // IE

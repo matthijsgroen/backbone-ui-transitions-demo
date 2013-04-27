@@ -33,18 +33,19 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
     @model.loadProducts().then (products) =>
       @_createFolderView(products)
       @parent.activateFolder(this).then =>
-        `when`.all([@transitionAddClass('active'), @folderView.open()]).then =>
+        @$el.addClass('active')
+        `when`.all([@transitionAddClass('open'), @folderView.open()]).then =>
           @trigger('opened', this) unless options.silent?
           @folderView
 
   isOpen: ->
-    @$el.is('.active')
+    @$el.is('.open')
 
   close: (options = {})->
     return `when`.resolve() unless @isOpen()
     @folderView.close().then =>
-      @transitionRemoveClass('active').then =>
-        @_destroyFolderView()
+      @_destroyFolderView()
+      @transitionRemoveClass('open').then =>
         @trigger('closed', this) unless options.silent?
 
   toggleFolder: (event) ->

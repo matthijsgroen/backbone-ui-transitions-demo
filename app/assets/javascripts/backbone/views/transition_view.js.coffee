@@ -21,7 +21,7 @@ class UIDemo.Views.TransitionView extends Backbone.View
     defer = `when`.defer()
     transition =
       duration: @_getTransitionDuration($el)
-      eventName: @_whichTransitionEvent()
+      eventName: UIDemo.app.transitionEventName()
       resolver: defer.resolver
       el: $el[0]
       view: this
@@ -48,15 +48,6 @@ class UIDemo.Views.TransitionView extends Backbone.View
 
   _parseTime: (text) ->
     Math.max (parseFloat(item) for item in text.split(', '))...
-
-  _whichTransitionEvent: ->
-    el = document.createElement('fakeelement')
-    transitions =
-      'transition': 'transitionend'
-      'OTransition': 'oTransitionEnd'
-      'MozTransition': 'transitionend'
-      'WebkitTransition': 'webkitTransitionEnd'
-    return event for property, event of transitions when el.style[property]?
 
   _delay: (code, time = 0) ->
     if $('body').is('.no-transitions')

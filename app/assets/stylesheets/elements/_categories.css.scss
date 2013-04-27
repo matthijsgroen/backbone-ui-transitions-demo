@@ -6,8 +6,13 @@
     opacity: 1.0;
   }
   to {
-    opacity: 0.2;
+    opacity: 0.6;
   }
+}
+
+section.categories > h1 {
+  margin-left: 2em;
+  color: $category-header-font-color;
 }
 
 ul.categories {
@@ -23,10 +28,10 @@ li.category {
   margin: 20px;
 
   .transitions & {
-    @include transition( opacity 300ms, outline 600ms );
+    @include transition( opacity 300ms, box-shadow 300ms );
   }
-  outline: 0px solid white;
-  @include box-shadow(rgba(0,0,0,0.6) 2px 2px 5px);
+  outline: 0px solid $base-background-color;
+  @include box-shadow(rgba(0,0,0,0.6) 2px 2px 2px);
 
   img {
     vertical-align: bottom;
@@ -35,11 +40,12 @@ li.category {
     }
   }
 
-  &.active {
-    background: green;
-    outline: 5px solid green;
+  &.open {
+    @include box-shadow(rgba(0,0,0,0.6) 2px 2px 4px);
   }
+
   &.loading {
+    background-color: $category-loading-color;
     img {
       -webkit-animation: loading 1.5s ease 0s infinite alternate;
     }
@@ -47,6 +53,7 @@ li.category {
 
   .open-category &:not(.active) {
     opacity: 0.5;
+    @include box-shadow(rgba(0,0,0,0.6) 1px 1px 2px);
   }
 
 }

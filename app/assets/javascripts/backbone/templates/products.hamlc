@@ -1,4 +1,4 @@
-%section
-  %h2= @categoryName()
+%section.products
+  %h1= @categoryName()
 
   %ul.products

@@ -15,11 +15,23 @@ class UIDemo.Application
     @trigger 'application:initialize', world
 
     Backbone.history?.start(pushState: yes) unless Backbone.History.started
+
     setTimeout(
-      -> $('body').removeClass('no-transitions').addClass('transitions')
+      =>
+        if @transitionEventName()?
+          $('body').removeClass('no-transitions').addClass('transitions')
       1000
     )
     @initialized = yes
+
+  transitionEventName: ->
+    el = document.createElement('fakeelement')
+    transitions =
+      'transition': 'transitionend'
+      'OTransition': 'oTransitionEnd'
+      'MozTransition': 'transitionend'
+      'WebkitTransition': 'webkitTransitionEnd'
+    return event for property, event of transitions when el.style[property]?
 
 _.extend UIDemo.Application.prototype, Backbone.Events
 

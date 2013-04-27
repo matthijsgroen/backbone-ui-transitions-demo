@@ -5,7 +5,7 @@ UIDemo.app.on 'application:setup', (world) ->
 UIDemo.app.on 'application:initialize', (world) ->
   categoriesView = new UIDemo.Views.ProductCategoriesView
     collection: world.productCategories
-  $('body').append categoriesView.render().el
+  $('header').after categoriesView.render().el
 
   new UIDemo.Routers.CategoryRouter
     categoriesView: categoriesView

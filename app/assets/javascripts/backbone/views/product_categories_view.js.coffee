@@ -3,7 +3,7 @@
 
 class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
   tagName: 'section'
-  className: 'products'
+  className: 'categories'
   itemViewClass: UIDemo.Views.ProductCategoryView
   collectionSelector: 'ul.categories'
 
@@ -23,6 +23,7 @@ class UIDemo.Views.ProductCategoriesView extends UIDemo.Views.CollectionView
 
   activate: ->
     @$el.removeClass('open-category')
+    @$('li').removeClass('active')
 
   closeAll: ->
     closed = @itemViews.map (v) -> v.close(silent: true)

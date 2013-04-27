@@ -1,8 +1,10 @@
-$base-color: #f9f9f9;
 
+@import 'colors';
+@import 'typography';
 @import 'elements/*';
 
-
 body {
-  background: $base-color;
+  background: $base-background-color;
+  margin: 0;
+  padding: 0;
 }
