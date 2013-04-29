@@ -1,27 +1,45 @@
 
-class UIDemo.Views.TransitionView extends Backbone.View
+class UIDemo.Helpers.Transition
 
-  transitionRemoveClass: (className, $el = @$el) ->
+  initializeTransitions: ->
+    if @_transitionEventName()?
+      $('body').removeClass('no-transitions').addClass('transitions')
+
+  constructor: (@$el) ->
+
+  removeClass: (className, $el = @$el) ->
     p = @_transitionPromise($el)
-    @_delay ->
+    @delay ->
       p.start()
       $el.removeClass className
     .then ->
       p.promise
 
-  transitionAddClass: (className, $el = @$el) ->
+  addClass: (className, $el = @$el) ->
     p = @_transitionPromise($el)
-    @_delay ->
+    @delay ->
       p.start()
       $el.addClass className
     .then ->
       p.promise
 
+  delay: (code, time = 0) ->
+    if $('body').is('.no-transitions')
+      result = code()
+      `when`.resolve(result)
+
+    defer = `when`.defer()
+    setTimeout(
+      -> `when(code())`.then (result) => defer.resolve(result)
+      time
+    )
+    defer.promise
+
   _transitionPromise: ($el) ->
     defer = `when`.defer()
     transition =
       duration: @_getTransitionDuration($el)
-      eventName: UIDemo.app.transitionEventName()
+      eventName: @_transitionEventName()
       resolver: defer.resolver
       el: $el[0]
       view: this
@@ -49,14 +67,12 @@ class UIDemo.Views.TransitionView extends Backbone.View
   _parseTime: (text) ->
     Math.max (parseFloat(item) for item in text.split(', '))...
 
-  _delay: (code, time = 0) ->
-    if $('body').is('.no-transitions')
-      result = code()
-      `when`.resolve(result)
+  _transitionEventName: ->
+    el = document.createElement('fakeelement')
+    transitions =
+      'transition': 'transitionend'
+      'OTransition': 'oTransitionEnd'
+      'MozTransition': 'transitionend'
+      'WebkitTransition': 'webkitTransitionEnd'
+    return event for property, event of transitions when el.style[property]?
 
-    defer = `when`.defer()
-    setTimeout(
-      -> `when(code())`.then (result) => defer.resolve(result)
-      time
-    )
-    defer.promise

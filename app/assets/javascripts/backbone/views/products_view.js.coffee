@@ -1,4 +1,3 @@
-#= require ./transition_view
 
 class UIDemo.Views.ProductsView extends UIDemo.Views.CollectionView
   tagName: 'li'
@@ -11,16 +10,17 @@ class UIDemo.Views.ProductsView extends UIDemo.Views.CollectionView
   initialize: ({ @category }) ->
     super
     @on 'productView:open', @openProductFromView, this
+    @tr = new UIDemo.Helpers.Transition(@$el)
 
   categoryName: ->
     @category.get('name')
 
   open: ->
-    @transitionRemoveClass 'collapsed'
+    @tr.removeClass 'collapsed'
 
   close: ->
     @closeAll().then =>
-      @transitionAddClass 'collapsed'
+      @tr.addClass 'collapsed'
 
   openProduct: (productId) ->
     activeView = @findViewForModel(productId)
@@ -29,5 +29,4 @@ class UIDemo.Views.ProductsView extends UIDemo.Views.CollectionView
   closeAll: ->
     closed = @itemViews.map (v) -> v.close()
     `when`.all(closed)
-
 

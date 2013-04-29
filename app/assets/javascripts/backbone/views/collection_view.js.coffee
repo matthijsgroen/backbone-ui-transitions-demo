@@ -1,6 +1,5 @@
-#= require ./transition_view
 
-class UIDemo.Views.CollectionView extends UIDemo.Views.TransitionView
+class UIDemo.Views.CollectionView extends Backbone.View
   itemViewClass: Backbone.View
   collectionSelector: 'ul'
 

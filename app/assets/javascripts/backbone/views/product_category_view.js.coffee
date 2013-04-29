@@ -1,6 +1,5 @@
-#= require ./transition_view
 
-class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
+class UIDemo.Views.ProductCategoryView extends Backbone.View
   tagName: 'li'
   className: 'category'
 
@@ -11,6 +10,8 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
   initialize: ->
     @listenTo @model, 'products:loading', @markLoading
     @listenTo @model, 'products:loaded', @clearLoading
+
+    @tr = new UIDemo.Helpers.Transition(@$el)
 
   render: ->
     @$el.html @template this
@@ -34,7 +35,7 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
       @_createFolderView(products)
       @parent.activateFolder(this).then =>
         @$el.addClass('active')
-        `when`.all([@transitionAddClass('open'), @folderView.open()]).then =>
+        `when`.all([@tr.addClass('open'), @folderView.open()]).then =>
           @trigger('opened', this) unless options.silent?
           @folderView
 
@@ -45,7 +46,7 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
     return `when`.resolve() unless @isOpen()
     @folderView.close().then =>
       @_destroyFolderView()
-      @transitionRemoveClass('open').then =>
+      @tr.removeClass('open').then =>
         @trigger('closed', this) unless options.silent?
 
   toggleFolder: (event) ->
@@ -54,8 +55,13 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
       @close().then =>
         Backbone.history.navigate ''
     else
-      @open().then =>
-        Backbone.history.navigate @categoryUrl()
+      @open().then(
+        =>
+          Backbone.history.navigate @categoryUrl()
+        (error) =>
+          console.log error, error.message
+      )
+
     false
 
   _createFolderView: (products) ->
@@ -68,6 +74,4 @@ class UIDemo.Views.ProductCategoryView extends UIDemo.Views.TransitionView
   _destroyFolderView: ->
     @folderView.remove()
     delete @['folderView']
-
-
 

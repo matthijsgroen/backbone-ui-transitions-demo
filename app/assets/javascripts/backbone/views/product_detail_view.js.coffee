@@ -1,5 +1,5 @@
 
-class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
+class UIDemo.Views.ProductDetailView extends Backbone.View
   tagName: 'section'
   className: 'product-details hidden'
   template: JST['product_details']
@@ -24,6 +24,7 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
       top: 'auto', # Top position relative to parent in px
       left: 'auto' # Left position relative to parent in px
     @spinner = new Spinner(opts).spin()
+    @tr = new UIDemo.Helpers.Transition(@$el)
 
   render: ->
     @$el.html @template this
@@ -45,12 +46,12 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
   open: ($link) ->
     @_placeInFixed($link)
     $layer = @_injectDimmedLayer()
-    imageRotate = @_delay(-> $link.addClass 'animate').then =>
-      @transitionAddClass('place-right', $link).then =>
-        @transitionAddClass('place-image', $link)
+    imageRotate = @tr.delay(-> $link.addClass 'animate').then =>
+      @tr.addClass('place-right', $link).then =>
+        @tr.addClass('place-image', $link)
 
-    layerShift = @_delay(
-      => @transitionRemoveClass('hidden', $layer).then => @transitionRemoveClass 'hidden'
+    layerShift = @tr.delay(
+      => @tr.removeClass('hidden', $layer).then => @tr.removeClass 'hidden'
       500
     )
     # Load data during transition (blocks url navigate)
@@ -64,10 +65,10 @@ class UIDemo.Views.ProductDetailView extends UIDemo.Views.TransitionView
     $layer = $('body > .product-layer')
     $stubImage = $link.parent().find('img.opened')
 
-    imageRotate = @transitionRemoveClass('place-image', $link).then =>
-      @transitionRemoveClass('place-right', $link)
-    layerShift = @transitionAddClass('hidden').then =>
-      @transitionAddClass('hidden', $layer)
+    imageRotate = @tr.removeClass('place-image', $link).then =>
+      @tr.removeClass('place-right', $link)
+    layerShift = @tr.addClass('hidden').then =>
+      @tr.addClass('hidden', $layer)
     `when`.all([imageRotate, layerShift]).then =>
       $layer.remove()
       $link.removeAttr('style').removeClass('animate')
