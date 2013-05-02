@@ -47,15 +47,24 @@ class UIDemo.Views.ProductDetailView extends Backbone.View
     #`when`.all([imageRotate, layerShift, @model.fetchDetails()])
     # Load data during transition and do not block transition
     @model.fetchDetails()
-    `when`.all([@_imageRotateOpenAnimation($link), @_dimmedLayerOpenAnimation()])
+    `when`.all([@_imageRotateOpenAnimation($link), @_dimmedLayerOpenAnimation()]).then =>
+      @tr.removeClass 'hidden'
 
   close: ($link) ->
-    `when`.all([@_imageRotateCloseAnimation($link), @_dimmedLayerCloseAnimation()]).then =>
+    `when`.all([@_imageRotateCloseAnimation($link), @_dimmedLayerCloseAnimation()])
 
   _imageRotateOpenAnimation: ($link) ->
+    prefetchImage = `when`.defer()
+    detailImage = new Image
+    detailImage.onload = ->
+      console.log 'image prefetched'
+      prefetchImage.resolve(detailImage.src)
+    detailImage.src = @model.get('detailImageUrl')
+
     @_placeInFixed($link)
     @tr.delay(-> $link.addClass 'animate').then =>
-      @tr.addClass('place-right', $link).then =>
+      `when`.all([@tr.addClass('place-right', $link), prefetchImage.promise]).then (results) =>
+        $link.find('img').attr('src', results[1])
         @tr.addClass('place-image', $link)
 
   _imageRotateCloseAnimation: ($link) ->
@@ -69,8 +78,7 @@ class UIDemo.Views.ProductDetailView extends Backbone.View
     $('body').append $layer
 
     @tr.delay(
-      => @tr.removeClass('hidden', $layer).then =>
-        @tr.removeClass 'hidden'
+      => @tr.removeClass('hidden', $layer)
       500
     )
 

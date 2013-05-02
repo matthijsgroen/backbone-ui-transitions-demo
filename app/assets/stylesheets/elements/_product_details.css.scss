@@ -3,7 +3,7 @@ section.product-details {
   z-index: 340;
   position: fixed;
   top: 10%;
-  left: 40%;
+  left: (80px + 375px + 80px);
   right: 5%;
   .transitions & {
     -webkit-transition: opacity 0.2s, margin-top 0.2s;

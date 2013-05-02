@@ -32,11 +32,11 @@ li.product {
       }
 
       &.place-image {
-        left: 8% !important;
+        left: 80px !important;
         top: 10% !important;
         &, img, .product-backface {
-          width: 300px;
-          height: 450px;
+          width: 375px;
+          height: 500px;
         }
 
         img {
