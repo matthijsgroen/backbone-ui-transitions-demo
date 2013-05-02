@@ -69,6 +69,7 @@ class UIDemo.Views.ProductDetailView extends Backbone.View
 
   _imageRotateCloseAnimation: ($link) ->
     @tr.removeClass('place-image', $link).then =>
+      $link.find('img').attr('src', @model.get('imageUrl'))
       @tr.removeClass('place-right', $link).then =>
         @_removeFixedFrom($link)
 
