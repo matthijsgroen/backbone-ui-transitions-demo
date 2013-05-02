@@ -4,10 +4,9 @@ class UIDemo.Models.Product extends Backbone.Model
     "/categories/#{@collection.categoryId}/products/#{@id}/details.json"
 
   fetchDetails: ->
-    return `when`.resolve(this) if @detailsFetched?
+    return `when`.resolve(this) if @get('description')?
     promise = @fetch(url: @detailUrl())
     `when(promise)`.then =>
-      @detailsFetched = yes
       this
 
 class UIDemo.Collections.Products extends Backbone.Collection

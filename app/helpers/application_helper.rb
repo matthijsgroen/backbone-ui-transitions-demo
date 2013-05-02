@@ -8,6 +8,10 @@ module ApplicationHelper
     serialize_json_array(@product_category.products, ProductSerializer)
   end
 
+  def product_details_json
+    ProductDetailsSerializer.new(@product).to_json
+  end
+
   private
 
   def serialize_json_array(list, serializer)
