@@ -28,7 +28,6 @@ class UIDemo.Views.ProductDetailView extends Backbone.View
 
   render: ->
     @$el.html @template this
-
     if @$('.description').text() is ''
       @$('.description').append @spinner.el
     else
@@ -44,36 +43,42 @@ class UIDemo.Views.ProductDetailView extends Backbone.View
     markdown.toHTML markdownDescription
 
   open: ($link) ->
+    # Load data during transition (blocks url navigate)
+    #`when`.all([imageRotate, layerShift, @model.fetchDetails()])
+    # Load data during transition and do not block transition
+    @model.fetchDetails()
+    `when`.all([@_imageRotateOpenAnimation($link), @_dimmedLayerOpenAnimation()])
+
+  close: ($link) ->
+    `when`.all([@_imageRotateCloseAnimation($link), @_dimmedLayerCloseAnimation()]).then =>
+
+  _imageRotateOpenAnimation: ($link) ->
     @_placeInFixed($link)
-    $layer = @_injectDimmedLayer()
-    imageRotate = @tr.delay(-> $link.addClass 'animate').then =>
+    @tr.delay(-> $link.addClass 'animate').then =>
       @tr.addClass('place-right', $link).then =>
         @tr.addClass('place-image', $link)
 
-    layerShift = @tr.delay(
-      => @tr.removeClass('hidden', $layer).then => @tr.removeClass 'hidden'
+  _imageRotateCloseAnimation: ($link) ->
+    @tr.removeClass('place-image', $link).then =>
+      @tr.removeClass('place-right', $link).then =>
+        @_removeFixedFrom($link)
+
+  _dimmedLayerOpenAnimation: ->
+    $layer = $('<div />').attr
+      class: 'product-layer hidden'
+    $('body').append $layer
+
+    @tr.delay(
+      => @tr.removeClass('hidden', $layer).then =>
+        @tr.removeClass 'hidden'
       500
     )
-    # Load data during transition (blocks url navigate)
-    #`when`.all([imageRotate, layerShift, @model.fetchDetails()])
 
-    # Load data during transition and do not block transition
-    @model.fetchDetails()
-    `when`.all([imageRotate, layerShift])
-
-  close: ($link) ->
+  _dimmedLayerCloseAnimation: ->
     $layer = $('body > .product-layer')
-    $stubImage = $link.parent().find('img.opened')
-
-    imageRotate = @tr.removeClass('place-image', $link).then =>
-      @tr.removeClass('place-right', $link)
-    layerShift = @tr.addClass('hidden').then =>
-      @tr.addClass('hidden', $layer)
-    `when`.all([imageRotate, layerShift]).then =>
-      $layer.remove()
-      $link.removeAttr('style').removeClass('animate')
-      $link.find('.product-backface').remove()
-      $stubImage.remove()
+    @tr.addClass('hidden').then =>
+      @tr.addClass('hidden', $layer).then =>
+        $layer.remove()
 
   _placeInFixed: ($link) ->
     $stubImage = $("<img />").attr
@@ -92,9 +97,10 @@ class UIDemo.Views.ProductDetailView extends Backbone.View
     )
     $link.append $('<div />').addClass('product-backface')
 
-  _injectDimmedLayer: ->
-    $layer = $('<div />').attr
-      class: 'product-layer hidden'
-    $('body').append $layer
-    $layer
+  _removeFixedFrom: ($link) ->
+    $stubImage = $link.parent().find('img.opened')
+    $link.removeAttr('style').removeClass('animate')
+    $link.find('.product-backface').remove()
+    $stubImage.remove()
+
 
