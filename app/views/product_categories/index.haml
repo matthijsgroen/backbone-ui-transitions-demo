@@ -1,5 +1,1 @@
-- content_for :javascript do
-  :coffee
-    UIDemo.app.on 'application:initialize', (world) ->
-      world.productCategories.reset #{product_categories_json}
-
+= render 'seeds/product_categories'

@@ -1,0 +1,8 @@
+= render 'seeds/product_categories'
+
+- content_for :javascript do
+  :coffee
+    UIDemo.app.on 'application:initialize', (world) ->
+      world.activeCategory = world.productCategories.get(#{@product_category.id})
+      world.activeCategory.products.reset #{product_category_products_json}
+
