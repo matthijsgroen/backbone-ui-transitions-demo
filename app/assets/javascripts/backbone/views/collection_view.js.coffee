@@ -34,7 +34,6 @@ class UIDemo.Views.CollectionView extends Backbone.View
       model: model
     itemView.parent = this
 
-
     itemView.on 'all', @_bubbleEvents, this
     @itemViews.push itemView
     itemView

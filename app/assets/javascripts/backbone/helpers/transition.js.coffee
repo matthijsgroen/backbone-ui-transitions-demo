@@ -40,6 +40,7 @@ class UIDemo.Helpers.Transition
     transition =
       duration: @_getTransitionDuration($el)
       eventName: @_transitionEventName()
+      properties: @_getTransitionProperties($el)
       resolver: defer.resolver
       el: $el[0]
       view: this
@@ -53,7 +54,9 @@ class UIDemo.Helpers.Transition
           @handler
           @duration
         )
-        @el.addEventListener(@eventName, @handler, false)
+        @el.addEventListener(@eventName, (e) =>
+          @handler() if e.pseudoElement is ''
+        , false)
       promise: defer.promise
     _.bindAll(transition)
 
@@ -63,6 +66,9 @@ class UIDemo.Helpers.Transition
     duration = @_parseTime $el.css('transitionDuration')
     delay = @_parseTime $el.css('transitionDelay')
     (duration + delay) * 1000
+
+  _getTransitionProperties: ($el) ->
+    $el.css('transitionProperty')
 
   _parseTime: (text) ->
     Math.max (parseFloat(item) for item in text.split(', '))...

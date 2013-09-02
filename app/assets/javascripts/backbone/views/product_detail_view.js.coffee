@@ -63,8 +63,10 @@ class UIDemo.Views.ProductDetailView extends Backbone.View
 
     @_placeInFixed($link)
     @tr.delay(-> $link.addClass 'animate').then =>
-      `when`.all([@tr.addClass('place-right', $link), prefetchImage.promise]).then (results) =>
-        $link.find('img').attr('src', results[1])
+      prefetchImage.promise.then (results) =>
+        $link.find('img').attr('src', results)
+
+      @tr.addClass('place-right', $link).then =>
         @tr.addClass('place-image', $link)
 
   _imageRotateCloseAnimation: ($link) ->

@@ -8,3 +8,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.slow, .slow * {
+  -webkit-transition-duration: 3s !important;
+}

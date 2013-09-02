@@ -33,6 +33,7 @@ class UIDemo.Views.ProductCategoryView extends Backbone.View
     return `when`.resolve(@folderView) if @isOpen()
     @model.loadProducts().then (products) =>
       @_createFolderView(products)
+      @folderView.$el.addClass('slow') if @$el.is('.slow')
       @parent.activateFolder(this).then =>
         @$el.addClass('active')
         `when`.all([@tr.addClass('open'), @folderView.open()]).then =>
