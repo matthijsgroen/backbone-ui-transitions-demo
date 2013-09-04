@@ -3,6 +3,7 @@ class ProductCategoriesController < ApplicationController
 
   def index
     @product_categories = ProductCategory.all
+    sleep 3
     respond_to do |format|
       format.html
       format.json { render json: @product_categories }
@@ -11,6 +12,7 @@ class ProductCategoriesController < ApplicationController
 
   def show
     @product_category = ProductCategory.find(params[:id])
+    sleep 3
     respond_with @product_category
   end
 

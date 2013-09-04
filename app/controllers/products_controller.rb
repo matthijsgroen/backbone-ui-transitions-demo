@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = @collection.all
-    sleep 2
+    sleep 3
 
     respond_to do |format|
       format.html
@@ -15,13 +15,13 @@ class ProductsController < ApplicationController
 
   def show
     @product = @collection.find params[:id]
-    sleep 2
+    sleep 3
     respond_with @product
   end
 
   def details
     @product = @collection.find params[:product_id]
-    sleep 2
+    sleep 3
     respond_with @product, serializer: ProductDetailsSerializer
   end
 
